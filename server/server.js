@@ -2,9 +2,13 @@ const express = require("express");
 const morgan = require("morgan");
 const colors = require("colors");
 const dotenv = require("dotenv");
+const connectDB = require("./config/db");
 
 // confige dotenv
 dotenv.config();
+
+// mongodb connection
+connectDB();
 
 // rest object
 const app = express();
@@ -14,11 +18,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 // routes
-app.get("/", (req, res) => {
-  res.status(200).send({
-    message: "Hello World!",
-  });
-});
+app.use("/api/v1/user", require("./routes/useRoutes"));
 
 // PORT
 const PORT = process.env.PORT || 5000;
